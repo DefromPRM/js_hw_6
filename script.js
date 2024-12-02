@@ -1,36 +1,34 @@
-const url1 = "./data.json";
+const data = JSON.parse(dataProducts);
+const featuredCards = document.querySelector(".fetured__cards");
+const feturedCardEl = document.querySelectorAll(".fetured__card");
 
-async function fetchData(url) {
-  try {
-    const responce = await fetch(url);
-    const data = await responce.json();
-    return data;
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+data.forEach((element) => {
+  const cardEl = document.createElement("div");
+  cardEl.classList.add("fetured__card");
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetchData(url1);
+  const featuredImgEl = document.createElement("img");
+  featuredImgEl.classList.add("fetured__card_img");
+  featuredImgEl.src = element.url;
 
-  const containerEl = document.querySelector(".all__cards");
+  const featureCardTextEl = document.createElement("div");
+  featureCardTextEl.classList.add("fetured__card_text");
 
-  data.forEach((el) => {
-    containerEl.insertAdjacentHTML(
-      "beforeend",
-      `
-        <div class="product__card">
-            <div class="prod__image_cont">
-                <img class="product__image" src="${el.img}" alt="${el.title}"/>
-                <button class="btn"><img src="./img/cart.png" alt="cart" />Add to Cart</button>
-            </div>
-            <div class="card__text">
-                <h3>${el.title}</h3>
-                <p>${el.description}</p>
-                <h4>${el.price}</h4>
-            </div>
-        </div>
-      `
-    );
-  });
+  const featuredCardTitle = document.createElement("h5");
+  featuredCardTitle.classList.add("fetured__card_title");
+  featuredCardTitle.textContent = element.name;
+
+  const featuredCardDescription = document.createElement("p");
+  featuredCardDescription.classList.add("fetured__card_par");
+  featuredCardDescription.textContent = element.description;
+
+  const featuredPrice = document.createElement("span");
+  featuredPrice.classList.add("fetured__card_price");
+  featuredPrice.textContent = element.price;
+
+  featuredCards.appendChild(cardEl);
+  cardEl.appendChild(featuredImgEl);
+  cardEl.appendChild(featureCardTextEl);
+  featureCardTextEl.appendChild(featuredCardTitle);
+  featureCardTextEl.appendChild(featuredCardDescription);
+  featureCardTextEl.appendChild(featuredPrice);
 });
